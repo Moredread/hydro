@@ -23,7 +23,7 @@ Cell* generate_random_data(int n_cells) {
 
 
 /**
- * Main routine. Simply calls the template function above.
+ * Main routine.
  */
 int main() {
     const int n_cells = 2000;
