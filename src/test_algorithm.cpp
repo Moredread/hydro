@@ -25,8 +25,8 @@ public:
 
     void test_algorithm()
     {
-        Cell trans1(0.0, 1.0), trans2(0.0, 1.0);
-        pseudo_advect<Cell, Cell>(cell1, cell2, &trans1, &trans2);
+        CellTransition trans1, trans2;
+        pseudo_advect<Cell, CellTransition>(cell1, cell2, &trans1, &trans2);
         CPPUNIT_ASSERT_DOUBLES_EQUAL(1./6., trans1.get_foo(), 1e-8);
         CPPUNIT_ASSERT_DOUBLES_EQUAL(-1./6., trans2.get_foo(), 1e-8);
         CPPUNIT_ASSERT_DOUBLES_EQUAL(pow(2.0, 0.1), trans1.get_bar(), 1e-8);

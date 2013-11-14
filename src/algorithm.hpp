@@ -40,17 +40,12 @@ void iterate_stuff(CellType* cells, const int n_cells, const int n_iterations) {
     for (int j = 0; j < n_iterations; j++) {
         // Compute transitions
         TransitionType trans[n_cells];
-        for (int i = 0; i < n_cells; i++) {
-            trans[i] = TransitionType(0.0, 1.0);
-        }
         for (int i = 0; i < n_cells - 1; i++) {
             pseudo_advect<CellType, TransitionType>(cells[i], cells[i + 1], &trans[i], &trans[i + 1]);
         }
-
         // Apply transitions to cells
         for (int i = 0; i < n_cells; i++) {
-            cells[i].set_foo(cells[i].get_foo() + trans[i].get_foo());
-            cells[i].set_foo(cells[i].get_bar() * trans[i].get_bar());
+            trans[i].apply(&cells[i]);
         }
     }
 }

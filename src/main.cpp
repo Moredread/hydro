@@ -3,6 +3,7 @@
 #include "cell.hpp"
 #include "algorithm.hpp"
 
+
 /**
  * Generator for random input data. Just to have some test data to work with.
  */
@@ -20,12 +21,13 @@ Cell* generate_random_data(int n_cells) {
     return cells;
 }
 
+
 /**
  * Main routine. Simply calls the template function above.
  */
 int main() {
     const int n_cells = 2000;
     Cell *cells = generate_random_data(n_cells);
-    iterate_stuff<Cell, Cell>(cells, n_cells, 20);
+    iterate_stuff<Cell, CellTransition>(cells, n_cells, 20);
     return 0;
 }

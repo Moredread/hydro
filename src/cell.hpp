@@ -34,4 +34,23 @@ private:
 
 };
 
+
+class CellTransition : public Cell
+{
+
+public:
+
+    CellTransition(double dfoo = 0.0, double dbar = 1.0)
+        : Cell(dfoo, dbar) {}
+
+    /**
+     * This method applies the transition to a given cell.
+     */
+    void apply(Cell *cell) {
+        cell->set_foo(cell->get_foo() + this->get_foo());
+        cell->set_bar(cell->get_bar() * this->get_bar());
+    }
+
+};
+
 #endif
