@@ -4,7 +4,7 @@
 #include <cmath>
 
 // Number of useless algorithm repetitions
-const int repeat = 1;
+const int repeat = 1000;
 
 /**
  * This template function implements a pseudo algorithm for testing and
@@ -30,5 +30,29 @@ void pseudo_advect(const CellType &cell1, const CellType &cell2,
     transition2->bar *= dbar;
 }
 
-#endif
 
+/**
+ * This function is a test benchmark for the pseudo-algorithm. It should be
+ * refactored if it proves to be useful.
+ */
+template <class CellType, class TransitionType>
+void iterate_stuff(CellType* cells, const int n_cells, const int n_iterations) {
+    for (int j = 0; j < n_iterations; j++) {
+        // Compute transitions
+        TransitionType trans[n_cells];
+        for (int i = 0; i < n_cells; i++) {
+            trans[i] = TransitionType(0.0, 1.0);
+        }
+        for (int i = 0; i < n_cells - 1; i++) {
+            pseudo_advect<CellType, TransitionType>(cells[i], cells[i + 1], &trans[i], &trans[i + 1]);
+        }
+
+        // Apply transitions to cells
+        for (int i = 0; i < n_cells; i++) {
+            cells[i].foo += trans[i].foo;
+            cells[i].bar *= trans[i].bar;
+        }
+    }
+}
+
+#endif
