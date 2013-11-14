@@ -21,8 +21,8 @@ public:
     void test_init()
     {
         cell = Cell(2.0, 1.0);
-        CPPUNIT_ASSERT(cell.foo == 2.0);
-        CPPUNIT_ASSERT(cell.bar == 1.0);
+        CPPUNIT_ASSERT_EQUAL(cell.foo, 2.0);
+        CPPUNIT_ASSERT_EQUAL(cell.bar, 1.0);
     }
 };
 
