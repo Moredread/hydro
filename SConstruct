@@ -1,5 +1,5 @@
 # Setup environment
-env = Environment(CCFLAGS=['-std=c++11'])
+env = Environment(CCFLAGS=['-std=c++11', '-g'])
 env.Append(LIBS=['cppunit'])
 
 # Compile test suite
