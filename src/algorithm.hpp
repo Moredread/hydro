@@ -20,14 +20,14 @@ void pseudo_advect(const CellType &cell1, const CellType &cell2,
 {
     double dfoo, dbar;
     for (int i = 0; i < repeat; i++) {
-        dfoo = (cell2.foo - cell1.foo) /
-                      (1.0 + pow(cell2.bar, 2) + pow(cell1.bar, 2));
-        dbar = pow(cell1.bar / cell2.bar, 0.1);
+        dfoo = (cell2.get_foo() - cell1.get_foo()) /
+                      (1.0 + pow(cell2.get_bar(), 2) + pow(cell1.get_bar(), 2));
+        dbar = pow(cell1.get_bar() / cell2.get_bar(), 0.1);
     }
-    transition1->foo += dfoo;
-    transition2->foo -= dfoo;
-    transition1->bar /= dbar;
-    transition2->bar *= dbar;
+    transition1->set_foo(transition1->get_foo() + dfoo);
+    transition2->set_foo(transition2->get_foo() - dfoo);
+    transition1->set_bar(transition1->get_bar() / dbar);
+    transition2->set_bar(transition2->get_bar() * dbar);
 }
 
 
@@ -49,8 +49,8 @@ void iterate_stuff(CellType* cells, const int n_cells, const int n_iterations) {
 
         // Apply transitions to cells
         for (int i = 0; i < n_cells; i++) {
-            cells[i].foo += trans[i].foo;
-            cells[i].bar *= trans[i].bar;
+            cells[i].set_foo(cells[i].get_foo() + trans[i].get_foo());
+            cells[i].set_foo(cells[i].get_bar() * trans[i].get_bar());
         }
     }
 }
