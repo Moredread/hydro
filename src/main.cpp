@@ -2,32 +2,29 @@
 
 #include "cell.hpp"
 #include "algorithm.hpp"
+#include "scheme.hpp"
+#include "domain.hpp"
 
 
-/**
- * Generator for random input data. Just to have some test data to work with.
- */
-Cell* generate_random_data(int n_cells) {
-    using namespace std;
-    // Random number generator
-    default_random_engine gen;
-    uniform_real_distribution<double> dist(0.0, 1.0);
+using namespace hydro;
 
-    // Generate initial cells
-    Cell * cells = new Cell[n_cells];
-    for (int i = 0; i < n_cells; i++) {
-        cells[i] = Cell(dist(gen), dist(gen));
-    }
-    return cells;
-}
+typedef PseudoScheme<PseudoAlgorithm<Cell, CellTransition>,
+    CartesianDomain1D<Cell>, Cell, CellTransition, double> SchemeType;
+typedef PseudoAlgorithm<Cell, CellTransition> AlgorithmType;
+typedef CartesianDomain1D<Cell> DomainType;
 
 
 /**
  * Main routine.
  */
 int main() {
-    const int n_cells = 2000;
-    Cell *cells = generate_random_data(n_cells);
-    iterate_stuff<Cell, CellTransition>(cells, n_cells, 20);
+    // setup
+    std::default_random_engine gen;
+    std::uniform_real_distribution<double> dist(0.0, 1.0);
+    DomainType domain;
+    SchemeType scheme(AlgorithmType(1));
+    for (int i = 0; i < 10; i++)
+        domain.add_cell(Cell(dist(gen), pow(2.0, dist(gen))));
+    scheme.advance(domain, 1.0);
     return 0;
 }

@@ -4,6 +4,8 @@
 #include "cell.hpp"
 
 
+using namespace hydro;
+
 class CellTest : public CppUnit::TestFixture {
 
 CPPUNIT_TEST_SUITE(CellTest);
@@ -57,7 +59,7 @@ public:
 
     void test_apply()
     {
-        trans.apply(&cell);
+        trans.apply(cell);
         CPPUNIT_ASSERT_EQUAL(2.0, cell.get_foo());
         CPPUNIT_ASSERT_EQUAL(1.0, cell.get_bar());
     }

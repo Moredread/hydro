@@ -3,51 +3,60 @@
 
 #include <cmath>
 
-// Number of useless algorithm repetitions
-const int repeat = 1000;
+
+namespace hydro {
 
 /**
- * This template function implements a pseudo algorithm for testing and
- * benchmarking purposes. It takes two cells as arguments and returns a
- * transition between these types.
+ * Abstract base class for an algorithm.
+ */
+template <class Cell, class Transition>
+class Algorithm
+{
+
+public:
+    virtual void compute_transitions(const Cell &cell1, const Cell &cell2,
+        Transition *transition1, Transition *transition2) = 0;
+
+};
+
+
+/**
+ * This template implements a pseudo algorithm for testing and
+ * benchmarking purposes.
  *
  * NOTE: the algorithm itself is utmost non-sense. It only serves the purpose
  * of performing some floating point operations.
  */
-template <class CellType, class TransitionType>
-void pseudo_advect(const CellType &cell1, const CellType &cell2,
-    TransitionType *transition1, TransitionType *transition2)
+template <class Cell, class Transition>
+class PseudoAlgorithm
 {
-    double dfoo, dbar;
-    for (int i = 0; i < repeat; i++) {
-        dfoo = (cell2.get_foo() - cell1.get_foo()) /
-                      (1.0 + pow(cell2.get_bar(), 2) + pow(cell1.get_bar(), 2));
-        dbar = pow(cell1.get_bar() / cell2.get_bar(), 0.1);
-    }
-    transition1->set_foo(transition1->get_foo() + dfoo);
-    transition2->set_foo(transition2->get_foo() - dfoo);
-    transition1->set_bar(transition1->get_bar() / dbar);
-    transition2->set_bar(transition2->get_bar() * dbar);
-}
 
-
-/**
- * This function is a test benchmark for the pseudo-algorithm. It should be
- * refactored if it proves to be useful.
- */
-template <class CellType, class TransitionType>
-void iterate_stuff(CellType* cells, const int n_cells, const int n_iterations) {
-    for (int j = 0; j < n_iterations; j++) {
-        // Compute transitions
-        TransitionType trans[n_cells];
-        for (int i = 0; i < n_cells - 1; i++) {
-            pseudo_advect<CellType, TransitionType>(cells[i], cells[i + 1], &trans[i], &trans[i + 1]);
-        }
-        // Apply transitions to cells
-        for (int i = 0; i < n_cells; i++) {
-            trans[i].apply(&cells[i]);
-        }
+public:
+    explicit PseudoAlgorithm(int repeat = 1000) {
+        this->repeat = repeat;
     }
+
+    void compute_transitions(const Cell &cell1, const Cell &cell2,
+        Transition &transition1, Transition &transition2) const
+    {
+        double dfoo, dbar;
+        for (int i = 0; i < repeat; i++) {
+            dfoo = (cell2.get_foo() - cell1.get_foo()) /
+                          (1.0 + pow(cell2.get_bar(), 2) + pow(cell1.get_bar(), 2));
+            dbar = pow(cell1.get_bar() / cell2.get_bar(), 0.1);
+        }
+
+        transition1.set_foo(transition1.get_foo() + dfoo);
+        transition2.set_foo(transition2.get_foo() - dfoo);
+        transition1.set_bar(transition1.get_bar() / dbar);
+        transition2.set_bar(transition2.get_bar() * dbar);
+    }
+
+private:
+    int repeat;
+
+};
+
 }
 
 #endif
