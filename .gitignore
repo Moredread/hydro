@@ -1,0 +1,6 @@
+# C++ compiled files
+*.o
+test_suite
+
+# SCons stuff
+.sconsign.dblite
