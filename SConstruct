@@ -19,6 +19,18 @@ test_env.Clean(coverage_html, 'coverage/')
 Depends(coverage_html, coverage_lcov)
 test_env.Alias('coverage', 'coverage/')
 
+# Documentation
+doc_doxygen = env.Command(
+    target='doc/doxyxml/xml/index.xml',
+    source=[Glob('src/*.hpp'), 'doc/doxygen.cfg'],
+    action='doxygen doc/doxygen.cfg')
+doc_sphinx = env.Command(
+    target='doc/_build/index.html',
+    source=[Glob('doc/**.rst'), 'doc/doxyxml/xml/index.xml'],
+    action='sphinx-build2 -b html doc doc/_build')
+Depends(doc_sphinx, doc_doxygen)
+env.Alias('doc', doc_sphinx)
+
 # Iteration benchmark
 bench_main = env.Program('main', 'src/main.cpp')
 Default('main')

@@ -7,3 +7,6 @@ For development:
 - SCons
 - CppUnit
 - LCOV
+- sphinx
+- doxygen
+- breathe

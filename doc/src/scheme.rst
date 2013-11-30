@@ -1,0 +1,4 @@
+Scheme
+======
+
+.. doxygenfile:: scheme.hpp

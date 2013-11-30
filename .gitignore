@@ -11,3 +11,7 @@ main
 # Coverage
 coverage.info
 coverage/
+
+# Documentation
+doc/_build/
+doc/doxyxml/

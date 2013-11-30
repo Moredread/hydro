@@ -1,0 +1,4 @@
+Algorithm
+=========
+
+.. doxygenfile:: algorithm.hpp
