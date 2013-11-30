@@ -1,8 +1,59 @@
 #ifndef __CELL_HPP
 #define __CELL_HPP
 
+#include <Eigen/Dense>
+
 
 namespace hydro {
+
+
+template <class Scalar>
+class HydroCell {
+
+public:
+    explicit HydroCell(Scalar density, Eigen::Matrix<Scalar, 3, 1> velocity, Scalar energy)
+    {
+        this->density = density;
+        this->velocity = velocity;
+        this->energy = energy;
+    }
+
+    void set_density(const Scalar density)
+    {
+        this->density = density;
+    }
+
+    Scalar get_density() const {
+        return density;
+    }
+
+    void set_velocity(const Eigen::Matrix<Scalar, 3, 1> velocity)
+    {
+        this->velocity = velocity;
+    }
+
+    Eigen::Matrix<Scalar, 3, 1> get_velocity() const
+    {
+        return velocity;
+    }
+
+    void set_energy(const Scalar energy)
+    {
+        this->energy = energy;
+    }
+
+    Scalar get_energy() const
+    {
+        return energy;
+    }
+
+private:
+    Scalar density;
+    Eigen::Matrix<Scalar, 3, 1> velocity;
+    Scalar energy;
+
+};
+
 
 class Cell {
 
@@ -53,6 +104,7 @@ public:
     }
 
 };
+
 
 }
 

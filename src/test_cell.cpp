@@ -1,10 +1,52 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <Eigen/Dense>
 #include "cell.hpp"
 
 
 using namespace hydro;
+
+class HydroCellTest : public CppUnit::TestFixture {
+
+CPPUNIT_TEST_SUITE(HydroCellTest);
+CPPUNIT_TEST(test_init);
+CPPUNIT_TEST(test_density);
+CPPUNIT_TEST(test_velocity);
+CPPUNIT_TEST(test_energy);
+CPPUNIT_TEST_SUITE_END();
+
+public:
+    void setUp() {}
+    void tearDown() {}
+
+    void test_init() {
+        HydroCell<double> cell(1.0, Eigen::Vector3d(1.0, -2.0, 3.0), 3.0);
+        CPPUNIT_ASSERT_EQUAL(cell.get_density(), 1.0);
+        CPPUNIT_ASSERT_EQUAL(cell.get_velocity(), Eigen::Vector3d(1.0, -2.0, 3.0));
+        CPPUNIT_ASSERT_EQUAL(cell.get_energy(), 3.0);
+    }
+
+    void test_density() {
+        HydroCell<double> cell(1.0, Eigen::Vector3d(1.0, -2.0, 3.0), 3.0);
+        cell.set_density(2.0);
+        CPPUNIT_ASSERT_EQUAL(cell.get_density(), 2.0);
+    }
+
+    void test_velocity() {
+        HydroCell<double> cell(1.0, Eigen::Vector3d(1.0, -2.0, 3.0), 3.0);
+        cell.set_velocity(Eigen::Vector3d(-1.0, 0.0, 4.0));
+        CPPUNIT_ASSERT_EQUAL(cell.get_velocity(), Eigen::Vector3d(-1.0, 0.0, 4.0));
+    }
+
+    void test_energy() {
+        HydroCell<double> cell(1.0, Eigen::Vector3d(1.0, -2.0, 3.0), 3.0);
+        cell.set_energy(2.0);
+        CPPUNIT_ASSERT_EQUAL(cell.get_energy(), 2.0);
+    }
+
+};
+
 
 class CellTest : public CppUnit::TestFixture {
 
