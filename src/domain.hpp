@@ -17,7 +17,7 @@ class Domain
 public:
     virtual std::vector<Cell> &get_cells() = 0;
     virtual Cell &add_cell(const Cell &cell) = 0;
-
+    virtual ~Domain();
 };
 
 
