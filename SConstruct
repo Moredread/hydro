@@ -12,7 +12,7 @@ test_alias = test_env.Alias('test', [test_program], test_program[0].abspath)
 AlwaysBuild(test_alias)
 
 # Coverage report
-coverage_lcov = test_env.Command('coverage.info', [], 'lcov --no-external -c -d . -o $TARGET')
+coverage_lcov = test_env.Command('coverage.info', [], 'lcov -c -d . -o $TARGET')
 Depends(coverage_lcov, test_alias)
 coverage_html = test_env.Command('coverage/', 'coverage.info', 'genhtml $SOURCE -o $TARGET')
 test_env.Clean(coverage_html, 'coverage/')
