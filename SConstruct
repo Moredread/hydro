@@ -22,3 +22,8 @@ test_env.Alias('coverage', 'coverage/')
 # Iteration benchmark
 bench_main = env.Program('main', 'src/main.cpp')
 Default('main')
+
+# Clean everything
+if GetOption("clean"):
+  Default("test")
+  Default("coverage")
