@@ -11,6 +11,9 @@ test_program = test_env.Program('test_suite', Glob('src/test_*.cpp'))
 test_alias = test_env.Alias('test', [test_program], test_program[0].abspath)
 AlwaysBuild(test_alias)
 
+test_env.Clean(test_alias, Glob("src/test_*.gcno"))
+test_env.Clean(test_alias, Glob("src/test_*.gcda"))
+
 # Coverage report
 coverage_lcov = test_env.Command('coverage.info', [], 'lcov --no-external -c -b . -d . -o $TARGET')
 Depends(coverage_lcov, test_alias)
